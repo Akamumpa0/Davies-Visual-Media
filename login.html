@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Davies Visual Media</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo-wrapper">
+                <img src="https://placehold.co/100x100/6366f1/FFF?text=DVM" alt="Davies Visual Media Logo" class="nav-logo" id="siteLogo">
+                <span class="logo-text">Davies Visual Media</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="auth-container">
+        <div class="auth-box">
+            <h2>Welcome Back</h2>
+            <p>Log in to access your Davies Visual Media dashboard.</p>
+            <form id="loginForm" novalidate>
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" required>
+                    <div class="validation-msg" id="loginEmailMsg"></div>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required minlength="6">
+                    <div class="validation-msg" id="loginPasswordMsg"></div>
+                </div>
+                <div class="validation-msg error" id="loginFormError" style="margin-bottom: 15px; text-align: center;"></div>
+                <button type="submit" class="btn-primary auth-btn" id="loginBtn">Log In</button>
+            </form>
+            <div class="auth-link">
+                Don't have an account? <a href="signup.html">Sign Up</a>
+            </div>
+        </div>
+    </div>
+    <script src="auth.js"></script>
+</body>
+</html>

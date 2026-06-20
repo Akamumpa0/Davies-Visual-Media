@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Davies Visual Media | Premium Design Agency</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="container nav-container">
+            <a href="index.html" class="logo-wrapper">
+               <img src="images/logo.png" alt="Davies Visual Media Logo" class="nav-logo">
+                <span class="logo-text">Davies Visual Media</span>
+            </a>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="login.html" class="btn-secondary">Client Login</a></li>
+                    <li><a href="signup.html" class="btn-primary">Start a Project</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 1. HERO SECTION: The Hook -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Elevating Brands Through <br><span class="highlight">Visual Excellence</span></h1>
+            <p>Davies Visual Media is a premium graphic design agency crafting unforgettable brand identities, digital experiences, and marketing collateral for forward-thinking businesses.</p>
+            <div class="hero-buttons">
+                <a href="signup.html" class="btn-primary">Start Your Project</a>
+                <a href="#portfolio" class="btn-secondary">View Our Work</a>
+            </div>
+            
+            
+    </section>
+
+    <!-- 2. SERVICES SECTION: The Promise -->
+    <section id="services" class="section">
+        <div class="container">
+            <h2 class="section-title">Our Expertise</h2>
+            <div class="services-grid">
+                <div class="card">
+                    <i class="fas fa-pen-nib card-icon moving-icon"></i>
+                    <h3>Brand Identity</h3>
+                    <p>Logos, typography, and comprehensive brand guidelines that make your business instantly recognizable.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-laptop-code card-icon moving-icon delay-1"></i>
+                    <h3>Digital Design</h3>
+                    <p>High-converting UI/UX for websites, mobile apps, and engaging digital marketing campaigns.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-box-open card-icon moving-icon delay-2"></i>
+                    <h3>Print & Packaging</h3>
+                    <p>Tactile, premium physical designs for product packaging, brochures, and marketing collateral.</p>
+                </div>
+            </div8>
+        </div>
+    </section>
+
+    <!-- 3. PORTFOLIO SECTION: The Proof (PUBLIC FACING) -->
+    <section id="portfolio" class="section" style="background-color: #0a0a0a;">
+        <div class="container">
+            <h2 class="section-title">Selected Works</h2>
+            <p style="text-align: center; color: var(--text-secondary); max-width: 600px; margin: -40px auto 50px;">
+                A curated selection of our recent projects. <br>Want to see how we can do this for you? <a href="signup.html" style="color: var(--accent-primary); font-weight: 600;">Let's talk.</a>
+            </p>
+            <div class="services-grid">
+                <!-- Portfolio Item 1 -->
+                <div class="card" style="padding: 0; overflow: hidden; border: none;">
+                    <img src="https://placehold.co/600x400/1a1a1a/6366f1?text=Nova+Tech+Rebrand" alt="Nova Tech" style="width: 100%; height: 250px; object-fit: cover; transition: 0.4s;">
+                    <div style="padding: 25px;">
+                        <span style="font-size: 0.8rem; color: var(--accent-secondary); font-weight: 600; text-transform: uppercase;">Brand Identity</span>
+                        <h3 style="margin-top: 8px;">Nova Tech Rebrand</h3>
+                        <p style="font-size: 0.9rem;">A complete visual overhaul for a leading SaaS startup, resulting in a 40% increase in brand recognition.</p>
+                    </div>
+                </div>
+                <!-- Portfolio Item 2 -->
+                <div class="card" style="padding: 0; overflow: hidden; border: none;">
+                    <img src="https://placehold.co/600x400/1a1a1a/ec4899?text=Bloom+E-commerce" alt="Bloom" style="width: 100%; height: 250px; object-fit: cover; transition: 0.4s;">
+                    <div style="padding: 25px;">
+                        <span style="font-size: 0.8rem; color: var(--accent-tertiary); font-weight: 600; text-transform: uppercase;">Digital Design</span>
+                        <h3 style="margin-top: 8px;">Bloom E-commerce UI</h3>
+                        <p style="font-size: 0.9rem;">High-fidelity UI/UX design for a luxury botanical brand, optimizing the customer checkout journey.</p>
+                    </div>
+                </div>
+                <!-- Portfolio Item 3 -->
+                <div class="card" style="padding: 0; overflow: hidden; border: none;">
+                    <img src="https://placehold.co/600x400/1a1a1a/14b8a6?text=Artisan+Coffee" alt="Artisan Coffee" style="width: 100%; height: 250px; object-fit: cover; transition: 0.4s;">
+                    <div style="padding: 25px;">
+                        <span style="font-size: 0.8rem; color: var(--accent-primary); font-weight: 600; text-transform: uppercase;">Packaging</span>
+                        <h3 style="margin-top: 8px;">Artisan Coffee Co.</h3>
+                        <p style="font-size: 0.9rem;">Sustainable, eye-catching packaging design that stands out on crowded retail shelves.</p>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="signup.html" class="btn-primary">View Full Portfolio & Get a Quote</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <h3 style="font-family: var(--font-heading); font-size: 1.5rem; margin-bottom: 15px; color: white;">Davies Visual Media</h3>
+            <p style="margin-bottom: 20px;">Crafting visual excellence for brands that dare to stand out.</p>
+            
+            <p style="margin-top: 40px; font-size: 0.85rem; opacity: 0.6;">&copy; 2026 Davies Visual Media. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
