@@ -5,14 +5,15 @@ const bcrypt = require('bcrypt');
 const cors = require('cors');
 const multer = require('multer');
 const path = require('path');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 const app = express();
 
 // Middleware
 app.use(express.json()); 
 app.use(cors()); 
-app.use(express.static(path.join(__dirname)));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use(express.static(path.join(__dirname))); // Serves CSS, JS, and root images
 
 // ==========================================
 // 1. DATABASE CONNECTION
@@ -23,6 +24,7 @@ const db = mysql.createConnection({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME
 });
+
 db.connect(err => {
     if (err) {
         console.error('❌ Error connecting to MySQL:', err);
@@ -32,16 +34,38 @@ db.connect(err => {
 });
 
 // ==========================================
-// 2. FILE UPLOAD CONFIGURATION
+// 2. CLOUDINARY FILE UPLOAD CONFIGURATION
 // ==========================================
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => cb(null, 'uploads/'),
-    filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
+// Configure Cloudinary
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+// Setup Multer to use Cloudinary instead of local disk
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        folder: 'davies_media_projects', // Folder name in your Cloudinary dashboard
+        allowed_formats: ['jpg', 'png', 'jpeg', 'gif'],
+    },
 });
 const upload = multer({ storage: storage });
 
 // ==========================================
-// 3. API ROUTES
+// 3. SERVE HTML PAGES (For Clean URLs)
+// ==========================================
+// This allows users to visit /login instead of /login.html
+const htmlPages = ['login', 'signup', 'customer', 'admin'];
+htmlPages.forEach(page => {
+    app.get(`/${page}`, (req, res) => {
+        res.sendFile(path.join(__dirname, `${page}.html`));
+    });
+});
+
+// ==========================================
+// 4. API ROUTES
 // ==========================================
 
 // --- SIGNUP ---
@@ -82,7 +106,8 @@ app.post('/api/login', async (req, res) => {
 // --- UPLOAD PROJECT (Admin) ---
 app.post('/api/projects', upload.single('image'), async (req, res) => {
     const { title, category } = req.body;
-    const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
+    // Cloudinary returns the hosted image URL in req.file.path
+    const imagePath = req.file ? req.file.path : null; 
     if (!imagePath) return res.status(400).json({ error: 'Image file is required' });
 
     try {
@@ -148,10 +173,7 @@ app.patch('/api/admin/projects/:id/feedback', async (req, res) => {
     }
 });
 
-// ==========================================
-// 4. START THE SERVER
-// ==========================================
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(` Davies Visual Media Server is running on http://localhost:${PORT}`);
+    console.log(`Davies Visual Media Server is running on port ${PORT}`);
 });
