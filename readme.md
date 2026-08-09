@@ -5,14 +5,14 @@ Perfect! Here's a **concise, professional README** that gets straight to the poi
 Create a file named **`README.md`** in your project folder and paste this:
 
 ```markdown
-# Davies Visual Media 
+# Davies Visual Media 🎨
 
 A full-stack web platform for a premium graphic design agency in Mbarara, Uganda. Streamlines client collaboration, project management, and portfolio showcasing.
 
 ![Status](https://img.shields.io/badge/Status-Active-success)
 ![License](https://img.shields.io/badge/License-MIT-blue)
 
-##  Key Features
+## ✨ Key Features
 
 **Client Portal**
 - Secure login with role-based access
@@ -26,7 +26,7 @@ A full-stack web platform for a premium graphic design agency in Mbarara, Uganda
 - Dynamic portfolio management
 - Company branding controls
 
-## Tech Stack
+## 🛠️ Tech Stack
 
 **Frontend:** HTML5, CSS3, Vanilla JavaScript (ES6+), Font Awesome  
 **Backend:** Node.js, Express.js  
@@ -34,7 +34,7 @@ A full-stack web platform for a premium graphic design agency in Mbarara, Uganda
 **Security:** Bcrypt password hashing, Environment variables, CORS protection  
 **Tools:** Git, WAMP Server
 
-##  Quick Start
+## 🚀 Quick Start
 
 ### Prerequisites
 - Node.js (v14+)
@@ -85,14 +85,14 @@ A full-stack web platform for a premium graphic design agency in Mbarara, Uganda
 └── admin-dashboard.js     # Admin features
 ```
 
-##  Security
+## 🔐 Security
 
 - Bcrypt password hashing
 - SQL injection prevention (parameterized queries)
 - Environment variable protection
 - Role-based access control
 
-##  Contact
+## 📞 Contact
 
 **Davies Visual Media**  
 📍 Mbarara, Uganda  
