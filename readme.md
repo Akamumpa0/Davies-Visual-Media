@@ -1,10 +1,3 @@
-Perfect! Here's a **concise, professional README** that gets straight to the point:
-
----
-
-Create a file named **`README.md`** in your project folder and paste this:
-
-```markdown
 # Davies Visual Media 🎨
 
 A full-stack web platform for a premium graphic design agency in Mbarara, Uganda. Streamlines client collaboration, project management, and portfolio showcasing.
@@ -15,30 +8,31 @@ A full-stack web platform for a premium graphic design agency in Mbarara, Uganda
 ## ✨ Key Features
 
 **Client Portal**
-- Secure login with role-based access
+- Secure login with JWT authentication
 - Real-time project tracking and updates
 - One-click approval or revision requests with feedback
-- Direct access to agency contact information
+- Premium glassmorphic design and seamless user experience
 
 **Admin Dashboard**
-- Upload and manage design projects
+- Upload and manage design projects with image storage
 - Track client approvals and revision requests
 - Dynamic portfolio management
-- Company branding controls
+- Custom layout unified with the public frontend
 
 ## 🛠️ Tech Stack
 
-**Frontend:** HTML5, CSS3, Vanilla JavaScript (ES6+), Font Awesome  
-**Backend:** Node.js, Express.js  
-**Database:** MySQL  
-**Security:** Bcrypt password hashing, Environment variables, CORS protection  
-**Tools:** Git, WAMP Server
+**Frontend:** React (Vite), React Router, React Hot Toast, Framer Motion, Vanilla CSS  
+**Backend:** Node.js, Express.js, Multer  
+**Database:** Supabase (PostgreSQL)  
+**Storage:** Cloudinary (for portfolio images)  
+**Security:** Bcrypt password hashing, JWT for session management, CORS protection  
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js (v14+)
-- MySQL (WAMP/XAMPP)
+- Node.js (v18+)
+- Supabase Account
+- Cloudinary Account
 
 ### Installation
 
@@ -46,51 +40,68 @@ A full-stack web platform for a premium graphic design agency in Mbarara, Uganda
    ```bash
    git clone https://github.com/Akamumpa0/Davies-Visual-Media.git
    cd Davies-Visual-Media
+   
+   # Install backend dependencies
+   cd server
+   npm install
+   
+   # Install frontend dependencies
+   cd ../client
    npm install
    ```
 
-2. **Set Up Database**
-   - Start MySQL server
-   - Create database: `davies_media`
-   - Import schema (tables: `users`, `projects`)
+2. **Set Up Supabase**
+   - Execute the SQL in `supabase_schema.sql` in your Supabase SQL Editor to create the `users` and `projects` tables.
 
 3. **Configure Environment**
-   Create `.env` file:
+   Create a `.env` file in the `server` directory:
    ```env
-   DB_HOST=localhost
-   DB_USER=root
-   DB_PASSWORD=
-   DB_NAME=davies_media
    PORT=3000
+   SUPABASE_URL=your_supabase_url
+   SUPABASE_ANON_KEY=your_supabase_anon_key
+   CLOUDINARY_CLOUD_NAME=your_cloudinary_name
+   CLOUDINARY_API_KEY=your_api_key
+   CLOUDINARY_API_SECRET=your_api_secret
+   JWT_SECRET=your_jwt_secret
    ```
 
-4. **Run**
+4. **Run Development Servers**
+   Open two terminal windows:
+   
+   Terminal 1 (Backend):
    ```bash
+   cd server
    node server.js
    ```
-   Visit: `http://localhost:3000`
+   
+   Terminal 2 (Frontend):
+   ```bash
+   cd client
+   npm run dev
+   ```
+   Visit the URL provided by Vite (usually `http://localhost:5173`).
 
 ## 📁 Project Structure
 
 ```
-├── server.js              # Express backend
-├── index.html             # Public homepage
-├── login.html             # Authentication
-├── signup.html            # Registration
-├── admin.html             # Admin dashboard
-├── customer.html          # Client dashboard
-├── style.css              # Global styles
-├── auth.js                # Auth logic
-├── dashboard-actions.js   # Dashboard features
-└── admin-dashboard.js     # Admin features
+├── client/                # React frontend application
+│   ├── src/
+│   │   ├── components/    # Reusable UI components (Navbar, Footer, etc.)
+│   │   ├── pages/         # Route pages (Home, Admin, Customer, etc.)
+│   │   ├── index.css      # Global styles and design tokens
+│   │   └── main.jsx       # React entry point
+├── server/                # Express backend application
+│   ├── server.js          # Main server and API routes
+│   └── authMiddleware.js  # JWT authentication middleware
+└── supabase_schema.sql    # Database schema setup
 ```
 
 ## 🔐 Security
 
 - Bcrypt password hashing
-- SQL injection prevention (parameterized queries)
-- Environment variable protection
-- Role-based access control
+- JWT-based protected routes
+- Cloudinary secure uploads
+- Role-based access control (Admin vs Customer)
 
 ## 📞 Contact
 
@@ -106,19 +117,3 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ---
 
 **Built with ❤️ by Davies Visual Media**
-```
-
----
-
-### **Upload to GitHub**
-
-In your terminal, run:
-```bash
-git add README.md
-git commit -m "Update README with concise documentation"
-git push origin main
-```
-
-Refresh your GitHub page, and you'll see this clean, professional README! 🎉
-
-Ready to add the **Public Contact Form** next?
