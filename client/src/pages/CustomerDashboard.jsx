@@ -17,7 +17,7 @@ const CustomerDashboard = () => {
 
   const fetchProjects = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/projects');
+      const response = await fetch('/api/projects');
       if (response.ok) {
         const data = await response.json();
         setProjects(data);
@@ -46,7 +46,7 @@ const CustomerDashboard = () => {
 
     try {
       const token = localStorage.getItem('daviesToken');
-      const response = await fetch(`http://localhost:3000/api/projects/${projectId}/status`, {
+      const response = await fetch(`/api/projects/${projectId}/status`, {
         method: 'PATCH',
         headers: { 
           'Content-Type': 'application/json',

@@ -23,7 +23,7 @@ const AdminDashboard = () => {
   const fetchProjects = async () => {
     try {
       const token = localStorage.getItem('daviesToken');
-      const response = await fetch('http://localhost:3000/api/admin/projects', {
+      const response = await fetch('/api/admin/projects', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -60,7 +60,7 @@ const AdminDashboard = () => {
 
     try {
       const token = localStorage.getItem('daviesToken');
-      const response = await fetch('http://localhost:3000/api/projects', {
+      const response = await fetch('/api/projects', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`

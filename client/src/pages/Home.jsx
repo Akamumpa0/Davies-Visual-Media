@@ -10,7 +10,7 @@ const Home = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('http://localhost:3000/api/projects')
+        fetch('/api/projects')
             .then(res => res.json())
             .then(data => setProjects(data))
             .catch(err => console.error('Error fetching projects:', err))
