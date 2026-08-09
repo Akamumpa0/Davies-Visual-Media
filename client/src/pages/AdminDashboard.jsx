@@ -136,7 +136,7 @@ const AdminDashboard = () => {
                         {getStatusBadge(project.status)}
                       </div>
                       
-                      <div style={{ display: 'flex', gap: '20px', marginTop: '15px' }}>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', marginTop: '15px' }}>
                         <img src={project.image_path} alt={project.title} style={{ width: '150px', height: '100px', objectFit: 'contain', backgroundColor: '#f1f5f9', borderRadius: '4px' }} />
                         
                         <div style={{ flex: 1 }}>

@@ -157,13 +157,6 @@ ul { list-style: none; }
 
 .footer { padding: 50px 0; text-align: center; color: var(--text-secondary); border-top: 1px solid #e2e8f0; margin-top: 50px; }
 
-@media (max-width: 768px) {
-    .hero-content h1 { font-size: 2.5rem; }
-    .dashboard-grid { grid-template-columns: 1fr; }
-    .nav-menu { display: none; }
-    .project-item { flex-direction: column; align-items: flex-start; gap: 15px; }
-}
-
 /* ==========================================
    CUSTOMER PORTAL: CONTACT & INFO STYLES
    ========================================== */
@@ -299,9 +292,25 @@ ul { list-style: none; }
     cursor: pointer;
 }
 @media (max-width: 768px) {
-    .mobile-menu-btn {
-        display: block;
-    }
+    /* Layout Adjustments */
+    .container { padding: 0 15px; }
+    .section { padding: 60px 0; }
+    .section-title { font-size: 2rem; margin-bottom: 30px; }
+    
+    /* Hero Section */
+    .hero-content h1 { font-size: 2.5rem; }
+    .hero { padding-top: 80px; }
+    
+    /* Dashboards */
+    .dashboard-grid { grid-template-columns: 1fr; }
+    .project-item { flex-direction: column; align-items: flex-start; gap: 15px; }
+    
+    /* Auth */
+    .auth-container { padding: 80px 15px 30px; }
+    .auth-box { padding: 25px; }
+    
+    /* Navigation */
+    .mobile-menu-btn { display: block; }
     .nav-menu {
         position: absolute;
         top: 100%;
@@ -312,16 +321,12 @@ ul { list-style: none; }
         display: none;
         box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     }
-    .nav-menu.open {
-        display: flex;
-    }
+    .nav-menu.open { display: flex; }
     .nav-menu ul {
         flex-direction: column;
         width: 100%;
         text-align: center;
         padding: 20px 0;
     }
-    .nav-menu ul li {
-        margin: 15px 0;
-    }
+    .nav-menu ul li { margin: 15px 0; }
 }

@@ -167,7 +167,7 @@ const Home = () => {
                             <li style={{ marginBottom: '15px' }}><i className="fas fa-check-circle" style={{ color: 'var(--accent-primary)', marginRight: '10px' }}></i> Dedicated Client Portal</li>
                         </ul>
                     </motion.div>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '20px' }}>
                         <motion.div className="card" style={{ textAlign: 'center', padding: '40px 20px' }} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
                             <h2 style={{ fontSize: '3rem', color: 'var(--accent-primary)', marginBottom: '10px' }}>150+</h2>
                             <p style={{ color: 'var(--text-secondary)' }}>Projects Completed</p>
