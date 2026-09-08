@@ -329,4 +329,6 @@ ul { list-style: none; }
         padding: 20px 0;
     }
     .nav-menu ul li { margin: 15px 0; }
+    .nav-menu ul li a { color: var(--text-primary) !important; }
+    .nav-menu ul li .btn-primary, .nav-menu ul li .btn-secondary { color: var(--text-primary) !important; }
 }
