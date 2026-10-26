@@ -1,6 +1,33 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+const contactLinks = [
+    {
+        label: 'LinkedIn',
+        href: 'https://www.linkedin.com/in/akamumpa-davis-949b98416/',
+        icon: 'fab fa-linkedin-in',
+        external: true
+    },
+    {
+        label: 'GitHub',
+        href: 'https://github.com/Akamumpa0',
+        icon: 'fab fa-github',
+        external: true
+    },
+    {
+        label: 'Email',
+        href: 'https://mail.google.com/mail/?view=cm&fs=1&to=akamumpadavis21%40gmail.com',
+        icon: 'fas fa-envelope',
+        external: true
+    },
+    {
+        label: 'WhatsApp',
+        href: 'https://wa.me/256774793804',
+        icon: 'fab fa-whatsapp',
+        external: true
+    }
+];
+
 export default function Footer() {
     return (
         <footer className="footer" style={{ backgroundColor: 'var(--accent-primary)', padding: '60px 0 20px', color: 'white', border: 'none', marginTop: 0 }}>
@@ -31,9 +58,29 @@ export default function Footer() {
                 <div>
                     <h4 style={{ color: 'white', marginBottom: '15px' }}>Follow Us</h4>
                     <div style={{ display: 'flex', gap: '15px' }}>
-                        <a href="#" style={{ color: 'white', fontSize: '1.2rem' }}><i className="fab fa-instagram"></i></a>
-                        <a href="#" style={{ color: 'white', fontSize: '1.2rem' }}><i className="fab fa-behance"></i></a>
-                        <a href="https://wa.me/256774793804" style={{ color: 'white', fontSize: '1.2rem' }}><i className="fab fa-whatsapp"></i></a>
+                        {contactLinks.map(({ label, href, icon, external }) => (
+                            <a
+                                key={label}
+                                href={href}
+                                aria-label={label}
+                                title={label}
+                                target={external ? '_blank' : undefined}
+                                rel={external ? 'noopener noreferrer' : undefined}
+                                style={{
+                                    color: 'white',
+                                    fontSize: '1.2rem',
+                                    width: '42px',
+                                    height: '42px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    border: '1px solid rgba(255,255,255,0.35)',
+                                    borderRadius: '50%'
+                                }}
+                            >
+                                <i className={icon} aria-hidden="true"></i>
+                            </a>
+                        ))}
                     </div>
                 </div>
             </div>

@@ -4,13 +4,14 @@ import toast from 'react-hot-toast';
 import Spinner from '../components/Spinner';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { SERVICE_CATEGORIES } from '../serviceCategories';
 
 const AdminDashboard = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [title, setTitle] = useState('');
-  const [category, setCategory] = useState('Software Development');
+  const [category, setCategory] = useState('');
   const [image, setImage] = useState(null);
   
   const user = JSON.parse(localStorage.getItem('daviesUser') || '{}');
@@ -71,7 +72,7 @@ const AdminDashboard = () => {
       if (response.ok) {
         toast.success('Project uploaded to the portfolio.');
         setTitle('');
-        setCategory('Software Development');
+        setCategory('');
         setImage(null);
         document.getElementById('projectImage').value = '';
         fetchProjects(); // Refresh the list
@@ -168,11 +169,12 @@ const AdminDashboard = () => {
                   <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="e.g., Nova Tech Rebrand" required />
                 </div>
                 <div className="form-group">
-                  <label>Category</label>
-                  <select value={category} onChange={(e) => setCategory(e.target.value)}>
-                    <option value="Software Development">Software Development</option>
-                    <option value="Mobile App Development">Mobile App Development</option>
-                    <option value="Graphics Design">Graphics Design</option>
+                  <label>Service Category</label>
+                  <select value={category} onChange={(e) => setCategory(e.target.value)} required>
+                    <option value="" disabled>Select a service category</option>
+                    {SERVICE_CATEGORIES.map((service) => (
+                      <option key={service} value={service}>{service}</option>
+                    ))}
                   </select>
                 </div>
                 <div className="form-group">

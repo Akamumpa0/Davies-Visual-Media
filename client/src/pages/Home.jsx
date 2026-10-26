@@ -4,23 +4,86 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Skeleton from '../components/Skeleton';
 import { motion } from 'framer-motion';
+import { SERVICE_CATEGORIES } from '../serviceCategories';
+
+const CUSTOMERS_SERVED = 200;
 
 const Home = () => {
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [projectsError, setProjectsError] = useState('');
+    const [customerCount, setCustomerCount] = useState(1);
+    const [customerCountStarted, setCustomerCountStarted] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState('All Work');
 
     useEffect(() => {
         fetch('/api/projects')
-            .then(res => res.json())
-            .then(data => setProjects(data))
-            .catch(err => console.error('Error fetching projects:', err))
+            .then(async (response) => {
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.error || 'Failed to fetch portfolio projects');
+                }
+                if (!Array.isArray(data)) {
+                    throw new Error('Portfolio response was not a list of projects');
+                }
+                setProjects(data);
+            })
+            .catch((err) => {
+                console.error('Error fetching projects:', err);
+                setProjectsError('Portfolio projects are temporarily unavailable. Please try again later.');
+            })
             .finally(() => setLoading(false));
     }, []);
+
+    useEffect(() => {
+        if (!customerCountStarted) return undefined;
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            setCustomerCount(CUSTOMERS_SERVED);
+            return undefined;
+        }
+
+        const duration = 2500;
+        let animationFrame;
+        let startTime;
+
+        const animateCount = (timestamp) => {
+            if (startTime === undefined) startTime = timestamp;
+            const progress = Math.min((timestamp - startTime) / duration, 1);
+            setCustomerCount(1 + Math.floor(progress * (CUSTOMERS_SERVED - 1)));
+
+            if (progress < 1) {
+                animationFrame = window.requestAnimationFrame(animateCount);
+            }
+        };
+
+        animationFrame = window.requestAnimationFrame(animateCount);
+
+        return () => window.cancelAnimationFrame(animationFrame);
+    }, [customerCountStarted]);
 
     const fadeUp = {
         hidden: { opacity: 0, y: 30 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
     };
+
+    const projectsByCategory = projects.reduce((groups, project) => {
+        const category = project.category || 'Other';
+        if (!groups.has(category)) groups.set(category, []);
+        groups.get(category).push(project);
+        return groups;
+    }, new Map());
+    const orderedCategories = [
+        ...SERVICE_CATEGORIES.filter((category) => projectsByCategory.has(category)),
+        ...Array.from(projectsByCategory.keys()).filter((category) => !SERVICE_CATEGORIES.includes(category))
+    ];
+    const categoryTabs = [
+        'All Work',
+        ...SERVICE_CATEGORIES,
+        ...Array.from(projectsByCategory.keys()).filter((category) => !SERVICE_CATEGORIES.includes(category))
+    ];
+    const displayedCategories = selectedCategory === 'All Work' ? orderedCategories : [selectedCategory];
+    const categoryTabId = (category) => `portfolio-tab-${category.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
 
     return (
         <div>
@@ -168,9 +231,9 @@ const Home = () => {
                         </ul>
                     </motion.div>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '20px' }}>
-                        <motion.div className="card" style={{ textAlign: 'center', padding: '40px 20px' }} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
-                            <h2 style={{ fontSize: '3rem', color: 'var(--accent-primary)', marginBottom: '10px' }}>150+</h2>
-                            <p style={{ color: 'var(--text-secondary)' }}>Projects Completed</p>
+                        <motion.div className="card" style={{ textAlign: 'center', padding: '40px 20px' }} initial="hidden" whileInView="visible" onViewportEnter={() => setCustomerCountStarted(true)} viewport={{ once: true }} variants={fadeUp}>
+                            <h2 style={{ fontSize: '3rem', color: 'var(--accent-primary)', marginBottom: '10px' }} aria-label={`${CUSTOMERS_SERVED}+ customers served`}>{customerCount}+</h2>
+                            <p style={{ color: 'var(--text-secondary)' }}>Customers Served</p>
                         </motion.div>
                         <motion.div className="card" style={{ textAlign: 'center', padding: '40px 20px' }} initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} transition={{ delay: 0.1 }}>
                             <h2 style={{ fontSize: '3rem', color: 'var(--accent-secondary)', marginBottom: '10px' }}>98%</h2>
@@ -198,9 +261,9 @@ const Home = () => {
                         </p>
                     </motion.div>
 
-                    <div className="services-grid">
-                        {loading ? (
-                            Array.from({ length: 3 }).map((_, idx) => (
+                    {loading ? (
+                        <div className="services-grid">
+                            {Array.from({ length: 3 }).map((_, idx) => (
                                 <div key={idx} className="card" style={{ padding: 0, overflow: 'hidden', border: 'none' }}>
                                     <Skeleton height="250px" borderRadius="0" />
                                     <div style={{ padding: '25px' }}>
@@ -209,28 +272,71 @@ const Home = () => {
                                         <Skeleton height="15px" width="100%" />
                                     </div>
                                 </div>
-                            ))
-                        ) : (
-                            projects.slice(0, 6).map((proj, i) => (
-                                <motion.div
-                                    key={proj.id}
-                                    className="card"
-                                    style={{ padding: 0, overflow: 'hidden', border: 'none' }}
-                                    initial="hidden"
-                                    whileInView="visible"
-                                    viewport={{ once: true }}
-                                    variants={fadeUp}
-                                    transition={{ delay: i * 0.1 }}
-                                >
-                                    <img src={proj.image_path} alt={proj.title} style={{ width: '100%', height: '250px', objectFit: 'contain', backgroundColor: '#f1f5f9' }} />
-                                    <div style={{ padding: '25px' }}>
-                                        <span style={{ fontSize: '0.8rem', color: 'var(--accent-secondary)', fontWeight: 600, textTransform: 'uppercase' }}>{proj.category}</span>
-                                        <h3 style={{ marginTop: '8px' }}>{proj.title}</h3>
+                            ))}
+                        </div>
+                    ) : projectsError ? (
+                        <p role="alert" style={{ textAlign: 'center', color: 'var(--text-secondary)' }}>{projectsError}</p>
+                    ) : (
+                        <>
+                            <div className="portfolio-category-tabs" role="tablist" aria-label="Filter sample work by service">
+                                {categoryTabs.map((category) => {
+                                    const count = category === 'All Work' ? projects.length : projectsByCategory.get(category)?.length || 0;
+                                    return (
+                                        <button
+                                            key={category}
+                                            id={categoryTabId(category)}
+                                            type="button"
+                                            role="tab"
+                                            aria-selected={selectedCategory === category}
+                                            aria-controls="portfolio-results"
+                                            className="portfolio-category-tab"
+                                            onClick={() => setSelectedCategory(category)}
+                                        >
+                                            <span>{category}</span>
+                                            <span className="portfolio-category-count">{count}</span>
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                            <div id="portfolio-results" role="tabpanel" aria-labelledby={categoryTabId(selectedCategory)}>
+                                {projects.length === 0 ? (
+                                    <p style={{ textAlign: 'center', color: 'var(--text-secondary)' }}>No portfolio projects have been uploaded yet.</p>
+                                ) : !projectsByCategory.has(selectedCategory) && selectedCategory !== 'All Work' ? (
+                                    <p style={{ textAlign: 'center', color: 'var(--text-secondary)' }}>No sample work is available in {selectedCategory} yet.</p>
+                                ) : (
+                                    <div style={{ display: 'grid', gap: '48px' }}>
+                                        {displayedCategories.map((category) => (
+                                            <section key={category} aria-labelledby={`portfolio-${category}`}>
+                                                <h3 id={`portfolio-${category}`} style={{ marginBottom: '20px', paddingBottom: '12px', borderBottom: '1px solid var(--card-bg)', fontFamily: 'var(--font-heading)' }}>
+                                                    {category}
+                                                </h3>
+                                                <div className="services-grid">
+                                                    {projectsByCategory.get(category).map((proj, i) => (
+                                                        <motion.div
+                                                            key={proj.id}
+                                                            className="card"
+                                                            style={{ padding: 0, overflow: 'hidden', border: 'none' }}
+                                                            initial="hidden"
+                                                            whileInView="visible"
+                                                            viewport={{ once: true }}
+                                                            variants={fadeUp}
+                                                            transition={{ delay: i * 0.1 }}
+                                                        >
+                                                            <img src={proj.image_path} alt={proj.title} loading="lazy" style={{ width: '100%', height: '250px', objectFit: 'contain', backgroundColor: '#f1f5f9' }} />
+                                                            <div style={{ padding: '25px' }}>
+                                                                <span style={{ fontSize: '0.8rem', color: 'var(--accent-secondary)', fontWeight: 600, textTransform: 'uppercase' }}>{proj.category}</span>
+                                                                <h3 style={{ marginTop: '8px' }}>{proj.title}</h3>
+                                                            </div>
+                                                        </motion.div>
+                                                    ))}
+                                                </div>
+                                            </section>
+                                        ))}
                                     </div>
-                                </motion.div>
-                            ))
-                        )}
-                    </div>
+                                )}
+                            </div>
+                        </>
+                    )}
 
                     <div style={{ textAlign: 'center', marginTop: '50px' }}>
                         <Link to="/signup" className="btn-primary">View Full Portfolio & Get a Quote</Link>

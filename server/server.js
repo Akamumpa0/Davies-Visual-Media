@@ -1,15 +1,20 @@
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 const express = require('express');
 const { createClient } = require('@supabase/supabase-js');
+const { EnvHttpProxyAgent, setGlobalDispatcher } = require('undici');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const { verifyToken, isAdmin } = require('./authMiddleware');
 const { body, validationResult } = require('express-validator');
 const multer = require('multer');
-const path = require('path');
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
+
+if (process.env.HTTPS_PROXY || process.env.https_proxy || process.env.HTTP_PROXY || process.env.http_proxy) {
+    setGlobalDispatcher(new EnvHttpProxyAgent());
+}
 
 const app = express();
 
@@ -17,13 +22,17 @@ const app = express();
 app.use(express.json()); 
 app.use(cors()); 
 app.use(express.static(path.join(__dirname, '../client/dist'))); // Serves static React build files
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // ==========================================
 // 1. DATABASE CONNECTION (SUPABASE)
 // ==========================================
 // Provide SUPABASE_URL and SUPABASE_ANON_KEY (or service role key) in .env
-const supabaseUrl = process.env.SUPABASE_URL || 'https://xyz.supabase.co';
-const supabaseKey = process.env.SUPABASE_ANON_KEY || 'public-anon-key';
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
+if (!supabaseUrl || !supabaseKey) {
+    throw new Error('Missing Supabase configuration. Set SUPABASE_URL and SUPABASE_ANON_KEY in server/.env.');
+}
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 console.log('✅ Initialized Supabase client!');
