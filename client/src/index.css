@@ -98,6 +98,8 @@ ul { list-style: none; }
 .section { padding: 100px 0; }
 .section-title { font-family: var(--font-heading); font-size: 2.8rem; text-align: center; margin-bottom: 60px; }
 .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+.portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); gap: 24px; }
+.portfolio-image { display: block; width: 100%; height: clamp(280px, 38vw, 420px); object-fit: contain; background: #fff; }
 .portfolio-category-tabs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr)); gap: 10px; margin: 0 0 38px; }
 .portfolio-category-tab { min-height: 58px; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid #cbd5e1; border-radius: 8px; background: #fff; color: var(--text-primary); font: inherit; font-weight: 600; text-align: left; cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
 .portfolio-category-tab:hover { border-color: var(--accent-primary); color: var(--accent-primary); }

@@ -8,6 +8,15 @@ import { SERVICE_CATEGORIES } from '../serviceCategories';
 
 const CUSTOMERS_SERVED = 200;
 
+const getPortfolioImageUrl = (imagePath) => {
+    if (typeof imagePath !== 'string') return '';
+
+    return imagePath.replace(
+        /^(https?:\/\/res\.cloudinary\.com\/[^/]+\/image\/)upload\//,
+        '$1upload/f_auto,q_auto,w_1000,c_limit/'
+    );
+};
+
 const Home = () => {
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -310,7 +319,7 @@ const Home = () => {
                                                 <h3 id={`portfolio-${category}`} style={{ marginBottom: '20px', paddingBottom: '12px', borderBottom: '1px solid var(--card-bg)', fontFamily: 'var(--font-heading)' }}>
                                                     {category}
                                                 </h3>
-                                                <div className="services-grid">
+                                                <div className="portfolio-grid">
                                                     {projectsByCategory.get(category).map((proj, i) => (
                                                         <motion.div
                                                             key={proj.id}
@@ -320,9 +329,19 @@ const Home = () => {
                                                             whileInView="visible"
                                                             viewport={{ once: true }}
                                                             variants={fadeUp}
-                                                            transition={{ delay: i * 0.1 }}
+                                                            transition={{ duration: 0.35 }}
                                                         >
-                                                            <img src={proj.image_path} alt={proj.title} loading="lazy" style={{ width: '100%', height: '250px', objectFit: 'contain', backgroundColor: '#f1f5f9' }} />
+                                                            <img
+                                                                src={getPortfolioImageUrl(proj.image_path)}
+                                                                alt={proj.title}
+                                                                width="1000"
+                                                                height="750"
+                                                                loading={category === orderedCategories[0] && i === 0 ? 'eager' : 'lazy'}
+                                                                fetchPriority={category === orderedCategories[0] && i === 0 ? 'high' : 'auto'}
+                                                                decoding="async"
+                                                                sizes="(max-width: 680px) 100vw, (max-width: 1100px) 50vw, 560px"
+                                                                className="portfolio-image"
+                                                            />
                                                             <div style={{ padding: '25px' }}>
                                                                 <span style={{ fontSize: '0.8rem', color: 'var(--accent-secondary)', fontWeight: 600, textTransform: 'uppercase' }}>{proj.category}</span>
                                                                 <h3 style={{ marginTop: '8px' }}>{proj.title}</h3>
